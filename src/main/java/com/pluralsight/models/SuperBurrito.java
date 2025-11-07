@@ -1,4 +1,8 @@
 package com.pluralsight.models;
 
-public class SuperBurrito {
+import java.util.ArrayList;
+
+public class SuperBurrito extends Taco{
+
+
 }

@@ -1,5 +1,4 @@
 package com.pluralsight.models;
 
-public class Order {
-
+public class Toppings {
 }
