@@ -1,5 +1,8 @@
 package com.pluralsight.util;
 
+import com.pluralsight.models.Order;
+import com.pluralsight.models.OrderedItem;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,8 +15,8 @@ public class Receipt {
     /**
      * Write Order To Receipt File
      */
-    public void printReceipt() {
-        StringBuilder receiptFileName = new StringBuilder(generateTimestamp()).append(".txt");
+    public void printReceipt(Order order) {
+        String receiptFileName = generateTimestamp() + ".txt";;
         String date = String.valueOf(LocalDate.now());
 
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(String.valueOf(receiptFileName)))) {
@@ -23,7 +26,10 @@ public class Receipt {
             bf.write("----------------------------\n");
             bf.write(String.format("%-20s %10s\n", "Description", "Price"));
             bf.write("----------------------------\n");
-
+            for (OrderedItem c : order.getAllItem()) {
+                bf.write(String.valueOf(c));
+            }
+            bf.write("\nTotal Cost: $"+Order.getTotalPrice());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

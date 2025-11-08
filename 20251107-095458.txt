@@ -1,0 +1,10 @@
+------- TACO GALAXY -------
+        ORDER SUMMARY       
+Date: 2025-11-07
+----------------------------
+Description               Price
+----------------------------
+Drink size L                3.0
+Drink size L                3.0
+
+Total Cost: $6.0

@@ -5,9 +5,13 @@ import com.pluralsight.util.Receipt;
 
 public class Main {
     public static void main(String[] args) {
-//        UserInterface userInterface = new UserInterface();
-//        userInterface.menu();
-        Receipt x = new Receipt();
-        x.printReceipt();
+        System.out.println("""
+                --------|Welcome to Taco Galaxy|------------ 
+                """);
+        UserInterface userInterface = new UserInterface();
+        userInterface.menu();
+
+//        Receipt C = new Receipt();
+//        C.printReceipt();
     }
 }

@@ -1,8 +1,108 @@
 package com.pluralsight.ui;
 
+import com.pluralsight.Main;
+import com.pluralsight.models.Drink;
+import com.pluralsight.models.Order;
+import com.pluralsight.util.Receipt;
+
+import java.util.Scanner;
+
 public class UserInterface {
+    static Scanner scanner = new Scanner(System.in);
+    static Receipt receipt = new Receipt();
 
     public void menu() {
-        System.out.println("Enter ");
+
+        boolean exit = false;
+        while (!exit) {
+            System.out.print("""
+                    1) New Order
+                    0) Exit (closes the application) 
+                    Choice: """);
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice) {
+                case 1:
+                    addOrder();
+                    break;
+                case 0:
+                    exit = true;
+                    break;
+                default:
+                    System.err.println("Wrong Choice, Try Again\n");
+            }
+        }
     }
+
+    public void addOrder() {
+        Order newOrder = new Order();
+        boolean exit = false;
+
+        while (!exit) {
+            System.out.print("""
+                    -----|Order Screen|-----
+                    Option 1) Add Item
+                    Option 2) Add Drink
+                    Option 3) Add Main Side
+                    Option 4) Checkout
+                    Option 0) Cancel Order (deletes order, returns to Home)
+                    Choice: """);
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice) {
+                case 1:
+                    break;
+                case 2:
+                    addDrink(newOrder);
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    checkOut(newOrder);
+                    break;
+                case 0:
+                    //menu();
+                    exit = true;
+                    break;
+                default:
+                    System.err.println("Wrong Choice, Try Again\n");
+
+            }
+        }
+    }
+
+    private void addDrink(Order order) {
+
+        System.out.print("""
+                ----Choose Your Size----
+                    S - Small  ($2.00)
+                    M - Medium ($2.50)
+                    L - Large  ($3.00)
+                 Choice (S/M/L): """);
+
+        String choice = scanner.nextLine().trim().toUpperCase();
+
+        if (choice.matches("[SML]")) {
+            Drink drink = new Drink(choice);
+            order.addItem(drink);
+            System.out.println("Added: " + drink.description() + " - $" +
+                    String.format("%.2f", drink.getPrice()));
+        } else {
+            System.out.println("Please choose S, M, or L.");
+        }
+    }
+
+    public static void checkOut(Order order) {
+
+        System.out.print("Confirm order? (Y/N): ");
+        String confirm = scanner.nextLine().trim().toUpperCase();
+
+        if (confirm.equals("Y")) {
+            receipt.printReceipt(order);
+            System.out.println("Order confirmed!");
+        } else {
+            System.out.println("Order not confirmed.");
+        }
+    }
+
 }

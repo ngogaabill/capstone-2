@@ -1,4 +1,4 @@
 package com.pluralsight.models;
 
-public class StreetTaco {
+public class StreetTaco extends Taco{
 }
