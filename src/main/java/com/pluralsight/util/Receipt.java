@@ -20,16 +20,18 @@ public class Receipt {
         String date = String.valueOf(LocalDate.now());
 
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(String.valueOf(receiptFileName)))) {
-            bf.write("------- TACO GALAXY -------\n");
+            bf.write("----------TACO GALAXY -----------\n");
             bf.write("        ORDER SUMMARY       \n");
             bf.write("Date: " + date + "\n");
-            bf.write("----------------------------\n");
+            bf.write("---------------------------------\n");
             bf.write(String.format("%-20s %10s\n", "Description", "Price"));
-            bf.write("----------------------------\n");
+            bf.write("---------------------------------\n");
             for (OrderedItem c : order.getAllItem()) {
                 bf.write(String.valueOf(c));
             }
-            bf.write("\nTotal Cost: $"+Order.getTotalPrice());
+            bf.write("---------------------------------\n");
+            bf.write("Total Cost: $"+Order.getTotalPrice());
+            bf.write("\n THANKS FOR SHOPPING :)");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

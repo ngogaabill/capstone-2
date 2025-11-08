@@ -10,8 +10,5 @@ public class Main {
                 """);
         UserInterface userInterface = new UserInterface();
         userInterface.menu();
-
-//        Receipt C = new Receipt();
-//        C.printReceipt();
     }
 }

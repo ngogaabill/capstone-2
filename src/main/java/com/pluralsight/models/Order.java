@@ -8,7 +8,6 @@ import java.util.List;
 public class Order {
     static ArrayList<OrderedItem> cart;
 
-
     public Order() {
         this.cart = new ArrayList<>();
     }

@@ -3,15 +3,16 @@ package com.pluralsight.models;
 public class Drink implements OrderedItem {
     private String size;
     private double price;
+    private String flavor;
 
-    public Drink(String size) {
+    public Drink(String size, String flavor) {
         this.size = size;
+        if (flavor.equalsIgnoreCase("S")) {
+            this.flavor = "Strawberry";
+        } else if (flavor.equalsIgnoreCase("C")) {
+            this.flavor = "Chocolate";
+        } else this.flavor = "Vanilla";
     }
-
-//
-//    public String getSize() {
-//        return size;
-//    }
 
     /**
      *
@@ -19,7 +20,7 @@ public class Drink implements OrderedItem {
      */
     @Override
     public String description() {
-        return "Drink size " + size;
+        return String.format("Drink size %s - %s", size, this.flavor);
     }
 
     /**
@@ -40,6 +41,6 @@ public class Drink implements OrderedItem {
 
     @Override
     public String toString() {
-        return String.format("%-20s %10s\n", description(), getPrice());
+        return String.format("%-20s %8s\n", description(), getPrice());
     }
 }

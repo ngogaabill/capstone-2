@@ -9,6 +9,24 @@ public class Taco implements OrderedItem{
     private boolean deepFried;
     private ArrayList<Toppings> toppings = new ArrayList<>();
 
+    public Taco(String tortillaType, String tacoSize, boolean deepFried) {
+        this.tortillaType = tortillaType;
+        this.tacoSize = tacoSize;
+        this.deepFried = deepFried;
+    }
+
+    public String getTortillaType() {
+        return tortillaType;
+    }
+
+    public String getTacoSize() {
+        return tacoSize;
+    }
+
+    public boolean isDeepFried() {
+        return deepFried;
+    }
+
     @Override
     public String description() {
         return "";

@@ -41,9 +41,9 @@ public class UserInterface {
         while (!exit) {
             System.out.print("""
                     -----|Order Screen|-----
-                    Option 1) Add Item
+                    Option 1) Add Taco
                     Option 2) Add Drink
-                    Option 3) Add Main Side
+                    Option 3) Add Chip&Salsa
                     Option 4) Checkout
                     Option 0) Cancel Order (deletes order, returns to Home)
                     Choice: """);
@@ -51,17 +51,18 @@ public class UserInterface {
             scanner.nextLine();
             switch (choice) {
                 case 1:
+                    addTaco();
                     break;
                 case 2:
                     addDrink(newOrder);
                     break;
                 case 3:
+                    addChipSalsa(newOrder);
                     break;
                 case 4:
                     checkOut(newOrder);
                     break;
                 case 0:
-                    //menu();
                     exit = true;
                     break;
                 default:
@@ -69,6 +70,14 @@ public class UserInterface {
 
             }
         }
+    }
+
+    private void addChipSalsa(Order order) {
+        System.out.println("""
+                Chips&Salsa   ($1.50)""");
+    }
+
+    private void addTaco() {
     }
 
     private void addDrink(Order order) {
@@ -81,14 +90,19 @@ public class UserInterface {
                  Choice (S/M/L): """);
 
         String choice = scanner.nextLine().trim().toUpperCase();
-
-        if (choice.matches("[SML]")) {
-            Drink drink = new Drink(choice);
+        System.out.println("""
+                Choose Letter Matching Flavor
+                Strawberry
+                Chocolate
+                Vanilla""");
+        String flavor = scanner.nextLine().trim().toUpperCase();
+        if (choice.matches("[SML]") && flavor.matches("[SCV]")) {
+            Drink drink = new Drink(choice, flavor);
             order.addItem(drink);
             System.out.println("Added: " + drink.description() + " - $" +
                     String.format("%.2f", drink.getPrice()));
         } else {
-            System.out.println("Please choose S, M, or L.");
+            System.out.println("Please choose Correct Options");
         }
     }
 
