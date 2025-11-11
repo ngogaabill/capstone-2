@@ -4,6 +4,7 @@ import com.pluralsight.Main;
 import com.pluralsight.models.*;
 import com.pluralsight.util.Receipt;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -134,11 +135,58 @@ public class UserInterface {
             case 5 -> taco.setTortillaType("Bowl");
             default -> System.err.println("Wrong Choice");
         }
+
         //toppings
+        System.out.println("""
+                Options
+                   1) Regular Toppings
+                   2) Premium Toppings
+                Choice: """);
+        int toppingsOption = getInput();
+        switch (toppingsOption) {
+            case 1:
+                regularToppings(taco);
+                break;
+            case 2:
+                //premiumToppings();
+                break;
+        }
 
 
     }
 
+    private void regularToppings(Taco taco) {
+        String[] topps = {"lettuce", "cilantro", "onions ", "tomatoes", "jalapeños", "radishes", "pico de", "guacamole", "corn"};
+        System.out.println("""
+                Regular Toppings menu:
+                      1- lettuce 
+                      2- cilantro 
+                      3- onions
+                      4- tomatoes 
+                      5- jalapeños 
+                      6- radishes
+                      7- pico de
+                      8- guacamole
+                      9- corn
+                Choice(i.e 1/2/3)""");
+        String choices = scanner.nextLine().trim();
+        String[] toppingChoices = choices.split("\\/");
+
+            //convert the string input into a array of numbers
+        for (String c : toppingChoices) {
+            try {
+                int index = Integer.parseInt(c.trim());
+                if (index >= 1 && index <= 6) {
+                    // Changed: Use Toppings.SAUCE instead of ToppingType.SAUCE
+                    Toppings sauce = new Toppings(topps[index - 1], Toppings.REGULAR, false);
+                    System.out.println(sauce.toString());
+                    taco.addTopping(sauce);
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Wrong entry" + toppingChoices);
+            }
+        }
+    }
     private void addDrink(Order order) {
         System.out.print("""
                 ----Choose Your Size----

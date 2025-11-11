@@ -55,4 +55,9 @@ public class Taco implements OrderedItem {
     public void tacoSizePrice(double v) {
 
     }
+
+    public void addTopping(Toppings sauce) {
+        toppings.add(sauce);
+        System.out.println(toppings.size());
+    }
 }
