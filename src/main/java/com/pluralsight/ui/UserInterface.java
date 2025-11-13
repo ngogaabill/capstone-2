@@ -62,6 +62,7 @@ public class UserInterface {
                     break;
                 case 4:
                     checkOut(newOrder);
+                    exit = true;
                     break;
                 case 0:
                     exit = true;
@@ -407,6 +408,7 @@ public class UserInterface {
         if (confirm.equals("Y")) {
             receipt.printReceipt(order);//error it's not creating the file right away its waiting untill the program is closed
             System.out.println("Order confirmed!");
+            return;
         } else {
             System.out.println("Order not confirmed.");
         }

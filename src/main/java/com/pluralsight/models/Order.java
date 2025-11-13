@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
-    static ArrayList<OrderedItem> cart;
+    private ArrayList<OrderedItem> cart;
 
     public Order() {
         this.cart = new ArrayList<>();
@@ -18,7 +18,7 @@ public class Order {
         return cart;
     }
 
-    public static double getTotalPrice() {
+    public double getTotalPrice() {
         double total = 0.0;
         for (OrderedItem c : cart) {
             total += c.getPrice();

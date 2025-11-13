@@ -23,7 +23,7 @@ public class Receipt {
         String date = String.valueOf(LocalDate.now());
         String time = LocalTime.now().format(dateTimeFormatter);
 
-        try (BufferedWriter bf = new BufferedWriter(new FileWriter(String.valueOf(receiptFileName)))) {
+        try (BufferedWriter bf = new BufferedWriter(new FileWriter((receiptFileName)))) {
             bf.write("----------TACO GALAXY -----------\n");
             bf.write("        ORDER SUMMARY       \n");
             bf.write("Date: " + date + " Time: " + time);
@@ -35,8 +35,9 @@ public class Receipt {
                 bf.write(String.valueOf(c));
             }
             bf.write("---------------------------------\n");
-            bf.write(String.format("Total Cost: $%20.2f", Order.getTotalPrice()));
+            bf.write(String.format("Total Cost: $%20.2f", order.getTotalPrice()));
             bf.write("\n THANKS FOR SHOPPING :)");
+            bf.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
