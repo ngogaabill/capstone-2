@@ -16,8 +16,8 @@ public class UserInterface {
         boolean exit = false;
         while (!exit) {
             System.out.println("""
-                    1) New Order
-                    0) Exit (closes the application) 
+                              1) New Order
+                              0) Exit (closes the application) 
                     Choice: """);
             int choice = getInput();
 
@@ -27,7 +27,7 @@ public class UserInterface {
                     break;
                 case 0:
                     exit = true;
-                    System.out.println("GoodBye, Thanks For Shopping with Taco Galaxy");
+                    System.out.println("\uD83C\uDF2E GoodBye, Thanks For Shopping with Taco Galaxy");
                     break;
                 default:
                     System.err.println("Wrong Choice, Try Again");
@@ -41,12 +41,13 @@ public class UserInterface {
 
         while (!exit) {
             System.out.println("""
-                    -----|Order Screen|-----
+                    ──────────────|Order Menu| ────────
                     Option 1) Add Taco
                     Option 2) Add Drink
                     Option 3) Add Chip&Salsa
                     Option 4) Checkout
-                    Option 0) Cancel Order (deletes order, returns to Home)
+                    Option 0) Cancel Order
+                    ──────────────────────────────────
                     Choice: """);
             int choice = getInput();
 
@@ -65,6 +66,7 @@ public class UserInterface {
                     exit = true;
                     break;
                 case 0:
+                    System.out.println("❌ Order Cancelled");
                     exit = true;
                     break;
                 default:
@@ -76,29 +78,35 @@ public class UserInterface {
 
     private void addChipSalsa(Order order) {
         System.out.println("""
-                Chips&Salsa   ($1.50)
-                salsa Sauce Option:
-                                   1) Birrieraia Familia Castro
-                                   2) Taco Nazo
-                                   3) Los Tacos
+                ────────Chips & Salsa ($1.50)────────
+                salsa Option:
+                             1) Birrieraia Familia Castro
+                             2) Taco Nazo
+                             3) Los Tacos
                 Choice: """);
         int salsaSauce = getInput();
+
         if (salsaSauce == 1 || salsaSauce == 2 || salsaSauce == 3) {
             ChipsAndSalsa cp = new ChipsAndSalsa(salsaSauce);
             order.addItem(cp);
-            System.out.println("Added: " + cp.description() + " - $" +
+            System.out.println("✓ Added: " + cp.description() + " - $" +
                     String.format("%.2f", cp.getPrice()));
         } else System.err.println("Wrong choice");
     }
 
+    /**
+     * Add Taco to Order
+     *
+     * @param order
+     */
     private void addTaco(Order order) {
         //taco Size Menu
         System.out.println("""
-                 Choose Taco Size
-                   1) Single
-                   2) 3-Taco
-                   3) Burrito
-                Choice(1/2/3):""");
+                 ────────Choose Taco Size────────
+                         1) Single
+                         2) 3-Taco
+                         3) Burrito
+                Choice: """);
         int tacoSize = getInput();
         //Create a taco
         Taco taco = new Taco();
@@ -120,11 +128,11 @@ public class UserInterface {
         }
         //tortilla type menu
         System.out.println("""
-                Shell:
-                     1) Corn 
-                     2) Flour 
-                     3) Hard shell
-                     4) Bowl
+                ────────Choose Tortilla Type────────
+                        1) Corn 
+                        2) Flour 
+                        3) Hard shell
+                        4) Bowl
                 Choice: """);
         int tortillaType = getInput();
         switch (tortillaType) {
@@ -134,96 +142,60 @@ public class UserInterface {
             case 4 -> taco.setTortillaType("Bowl");
             default -> System.err.println("Wrong Choice");
         }
-        boolean exitToppings = false;
-        while (!exitToppings) {
-            //toppings
-            System.out.println("""
-                    Toppings Options
-                       1) Meat
-                       2) Cheese
-                       3) Other toppings
-                       4) Select sauces:
-                       5) No more Toppings
-                    Choice: """);
-            int toppingsOption = getInput();
-            switch (toppingsOption) {
-                case 1:
-                    addMeat(taco);
-                    break;
-                case 2:
-                    addCheese(taco);
-                    break;
-                case 3:
-                    regularToppings(taco);
-                    break;
-                case 4:
-                    selectSauces(taco);
-                    break;
-                case 5:
-                    exitToppings = true;
-                    break;
-                default:
-                    System.out.println("Wrong Choice");
-            }
+        //Meat
+        System.out.println(" Do You Want To Add Meat(Y/N)?");
+        String wantMeat = scanner.nextLine();
+        if (wantMeat.equalsIgnoreCase("Y")) {
+            addMeat(taco);
         }
-        System.out.println("Do you want your Taco Deep Fried?(Y/N)");
-        String deepFried = scanner.nextLine().trim().toUpperCase();
-        if (deepFried.equals("Y")) {
+        //cheese
+        System.out.println(" Do You Want To Add Cheese(Y/N)?");
+        String wantCheese = scanner.nextLine();
+        if (wantCheese.equalsIgnoreCase("Y")) {
+            addCheese(taco);
+        }
+        //regular toppings
+        System.out.println(" Do You Want To Add Regular Toppings(Y/N)?");
+        String wantRegular = scanner.nextLine();
+        if (wantRegular.equalsIgnoreCase("Y")) {
+            regularToppings(taco);
+        }
+        //Sauce
+        System.out.println(" Do You Want To Add Sauces(Y/N)?");
+        String wantSauce = scanner.nextLine();
+        if (wantSauce.equalsIgnoreCase("Y")) {
+            selectSauces(taco);
+        }
+        //sides
+        System.out.println(" Do You Want To Add Side(Y/N)?");
+        String wantSides = scanner.nextLine();
+        if (wantSides.equalsIgnoreCase("Y")) {
+            AddSides(taco);
+        }
+        //deepFried
+        System.out.println("\uD83D\uDD25 Do You Want To Deep Fry Taco(Y/N)?");
+        String deepFry = scanner.nextLine();
+        if (deepFry.equalsIgnoreCase("Y")) {
             taco.isDeepFried(true);
         }
-
+        //add Taco to Order
         order.addItem(taco);
-        System.out.println("Added: " + taco.description() + "- $" + String.format("%.2f", taco.getPrice()));
+        System.out.println(" Added Taco " + taco.toString());
     }
 
-    private void addCheese(Taco taco) {
-        String[] cheeseTopps = {"Queso Fresco", "Oaxaca", "Cotija", "Cheddar"};
+    private void AddSides(Taco taco) {
+        String[] sides = {"Lime wedges", "crema"};
         System.out.println("""
-                Cheese Toppings:
-                    1- Queso Fresco
-                    2- Oaxaca
-                    3- Cotija
-                    4- Cheddar 
-                Choice: """);
-        int cheeseChoice = getInput();
-        String cheeseName = cheeseTopps[cheeseChoice - 1];
-        System.out.println("Do you want extra? (Y/N)");
-        String extraChoice = scanner.nextLine().trim();
-        boolean isExtra = extraChoice.equalsIgnoreCase("y");
+                ──────────────|Side Option|──────────────
+                              1) Lime wedges
+                              2) Crema
+                 Choice: """);
+        int sideChoice = getInput();
+        String sideName = sides[sideChoice - 1];
+        Toppings side = new Toppings(sideName, Toppings.SIDE, false);
+        System.out.println("✓ Added:" + side.getName());
+        taco.addTopping(side);
 
-        double price = 0.0;
-        double extraPrice = 0.0;
-
-        if (isExtra) {
-            if (taco.getTacoSize().equals("Single")) {
-                price = 0.75;
-                extraPrice = 0.30;
-            } else if (taco.getTacoSize().equals("3-Taco")) {
-                price = 1.50;
-                extraPrice = 0.60;
-            } else if (taco.getTacoSize().equals("Burrito")) {
-                price = 2.25;
-                extraPrice = 0.90;
-            }
-            PremiumToppings cheese = new PremiumToppings(cheeseName, Toppings.CHEESE, isExtra, price, extraPrice);
-            taco.addTopping(cheese);
-
-            double totalCheesePrice = 0.0;
-            if (isExtra) {
-                totalCheesePrice = price + extraPrice;
-            } else {
-                totalCheesePrice = price;
-            }
-            String msg = "";
-            if (isExtra) {
-                msg = " Extra";
-            }
-            System.out.printf("Added: %s%s - $%.2f%n", cheeseName, msg, totalCheesePrice);
-            taco.addToppingPrice(totalCheesePrice);//send the total meatPrice to the Overall taco Price.
-
-        } else {
-            System.err.println("Wrong choice");
-        }
     }
 
     /**
@@ -231,10 +203,11 @@ public class UserInterface {
      *
      * @param taco
      */
+
     private void addMeat(Taco taco) {
         String[] meats = {"carne asada", "al pastor", "carnitas", "pollo", "chorizo", "pescado"};
         System.out.println("""
-                 Meat Options:
+                 🥩 Meat Options:
                       1) carne asada
                       2) al pastor
                       3) carnitas
@@ -279,12 +252,63 @@ public class UserInterface {
             if (isExtra) {
                 msg = " Extra";
             }
-            System.out.printf("Added: %s%s - $%.2f%n", meatName, msg, totalMeatPrice);
+            System.out.printf("✓ Added: %s%s - $%.2f%n", meatName, msg, totalMeatPrice);
             taco.addToppingPrice(totalMeatPrice);//send the total meatPrice to the Overall taco Price
 
         } else {
             System.err.println("Wrong choice");
         }
+    }
+
+    /**
+     * Add Cheese To Taco
+     *
+     * @param taco
+     */
+    private void addCheese(Taco taco) {
+        String[] cheeseTopps = {"Queso Fresco", "Oaxaca", "Cotija", "Cheddar"};
+        System.out.println("""
+                🧀 ────────Cheese Toppings ────────
+                         1- Queso Fresco
+                         2- Oaxaca
+                         3- Cotija
+                         4- Cheddar 
+                Choice: """);
+        int cheeseChoice = getInput();
+        String cheeseName = cheeseTopps[cheeseChoice - 1];
+        System.out.println("Do you want extra? (Y/N)");
+        String extraChoice = scanner.nextLine().trim();
+        boolean isExtra = extraChoice.equalsIgnoreCase("y");
+
+        double price = 0.0;
+        double extraPrice = 0.0;
+
+        if (taco.getTacoSize().equals("Single")) {
+            price = 0.75;
+            extraPrice = 0.30;
+        } else if (taco.getTacoSize().equals("3-Taco")) {
+            price = 1.50;
+            extraPrice = 0.60;
+        } else if (taco.getTacoSize().equals("Burrito")) {
+            price = 2.25;
+            extraPrice = 0.90;
+        }
+
+        double totalCheesePrice = 0.0;
+        String msg = "";
+        if (isExtra) {
+            totalCheesePrice = price + extraPrice;
+            msg = " Extra";
+        } else {
+            totalCheesePrice = price;
+            msg = "";
+        }
+        PremiumToppings cheese = new PremiumToppings(cheeseName, Toppings.CHEESE, isExtra, price, extraPrice);
+        taco.addTopping(cheese);
+        taco.addToppingPrice(totalCheesePrice);//send the total meatPrice to the Overall taco Price.
+
+        System.out.printf("✓ Added: %s%s - $%.2f%n", cheeseName, msg, totalCheesePrice);
+
     }
 
     /**
@@ -295,15 +319,14 @@ public class UserInterface {
     private void selectSauces(Taco taco) {
         String[] sauces = {"salsa verde", "salsa roja", "chipotle", "habanero", "mild", "extra hot"};
         System.out.println("""
-                Sauce Toppings Menu
-                        1- salsa verde
-                        2- salsa roja
-                        3- chipotle
-                        4- habanero
-                        5- mild
-                        6- extra hot
-                
-                 Choice(1/2/3): """);
+                 🌶️──────────────|Sauce Toppings Menu|──────────────
+                                 1- salsa verde
+                                 2- salsa roja
+                                 3- chipotle
+                                 4- habanero
+                                 5- mild
+                                 6- extra hot
+                Choice(1/2/3): """);
         String sauceChoices = scanner.nextLine().trim();
         String[] selectedSauce = sauceChoices.split("\\/");
 
@@ -312,12 +335,11 @@ public class UserInterface {
                 int index = Integer.parseInt(s.trim());
                 if (index >= 1 && index <= 6) {
                     Toppings sauce = new Toppings(sauces[index - 1], Toppings.SAUCE, false);
-                    System.out.println("Added Topping: " + sauce.toString());
+                    System.out.println("✓ Added Topping: " + sauce.getName());
                     taco.addTopping(sauce);
-
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Wrong entry" + selectedSauce);
+                System.out.println("Wrong entry" + s);
             }
         }
     }
@@ -330,16 +352,16 @@ public class UserInterface {
     private void regularToppings(Taco taco) {
         String[] regualarTopps = {"lettuce", "cilantro", "onions ", "tomatoes", "jalapeños", "radishes", "pico de", "guacamole", "corn"};
         System.out.println("""
-                Regular Toppings menu:
-                      1- lettuce 
-                      2- cilantro 
-                      3- onions
-                      4- tomatoes 
-                      5- jalapeños 
-                      6- radishes
-                      7- pico de
-                      8- guacamole
-                      9- corn
+                🥬──────────────|Regular Toppings menu|──────────────
+                             1- lettuce 
+                             2- cilantro 
+                             3- onions
+                             4- tomatoes 
+                             5- jalapeños 
+                             6- radishes
+                             7- pico de
+                             8- guacamole
+                             9- corn
                 Choice(i.e 1/2/3)""");
         String choices = scanner.nextLine().trim();
         String[] toppingChoices = choices.split("\\/"); //["2","4"] -> [2,4]
@@ -350,12 +372,12 @@ public class UserInterface {
                 int index = Integer.parseInt(c.trim());
                 if (index >= 1 && index <= 9) {
                     Toppings regular = new Toppings(regualarTopps[index - 1], Toppings.REGULAR, false);
-                    System.out.println("Added Topping: " + regular.toString());
+                    System.out.println("✓ Added Topping: " + regular.getName());
                     taco.addTopping(regular);
 
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Wrong entry" + toppingChoices);
+                System.out.println("Wrong entry" + c);
             }
         }
     }
@@ -367,8 +389,8 @@ public class UserInterface {
      */
     private void addDrink(Order order) {
         System.out.print("""
-                    Fountain Drinks
-                ----Choose Your Size----
+                              Fountain Drinks
+                ──────────────|Choose Your Size|──────────────
                        S - Small  ($2.00)
                        M - Medium ($2.50)
                        L - Large  ($3.00)
@@ -377,16 +399,16 @@ public class UserInterface {
 
         String drinkSize = scanner.nextLine().trim().toUpperCase();
         System.out.println("""
-                Choose Letter Matching Flavor
-                     (S)trawberry
-                     (C)hocolate
-                     (V)anilla
-                Choice: """);
+                ──────────────|Choose Matching Flavor|──────────────
+                              (S)trawberry
+                              (C)hocolate
+                              (V)anilla
+                         Choice: """);
         String flavor = scanner.nextLine().trim().toUpperCase();
         if (drinkSize.matches("[SML]") && flavor.matches("[SCV]")) {
             Drink drink = new Drink(drinkSize, flavor);
             order.addItem(drink);
-            System.out.println("Added: " + drink.description() + " - $" +
+            System.out.println("✓ Added: " + drink.description() + " - $" +
                     String.format("%.2f", drink.getPrice()));
         } else {
             System.out.println("Please choose Correct Options");
@@ -421,7 +443,7 @@ public class UserInterface {
      */
     public static void displayOrderSummary(List<OrderedItem> items) {
 //
-        System.out.println("---------------TACO GALAXY - ORDER SUMMARY---------------");
+        System.out.println("──────────────|TACO GALAXY - ORDER SUMMARY|──────────────");
         System.out.println();
         double total = 0.0;
         int itemNumber = 1;

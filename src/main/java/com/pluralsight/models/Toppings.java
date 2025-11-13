@@ -12,7 +12,6 @@ public class Toppings {
     public static final String SAUCE = "SAUCE";
     public static final String SIDE = "SIDE";
 
-
     public Toppings(String name, String type, boolean isExtra) {
         this.name = name;
         this.type = type;

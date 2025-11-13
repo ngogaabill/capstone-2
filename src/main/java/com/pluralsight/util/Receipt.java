@@ -35,9 +35,9 @@ public class Receipt {
                 bf.write(String.valueOf(c));
             }
             bf.write("---------------------------------\n");
-            bf.write(String.format("Total Cost: $%20.2f", order.getTotalPrice()));
+            bf.write((String.format("Total Cost: $%20.2f",order.getTotalPrice())));
             bf.write("\n THANKS FOR SHOPPING :)");
-            bf.flush();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -6,8 +6,7 @@ import com.pluralsight.util.Receipt;
 public class Main {
     public static void main(String[] args) {
         System.out.println("""
-                --------|Welcome to Taco Galaxy|------------ 
-                """);
+                ──────────────|WELCOME TO TACO GALAXY|────────────── """);
         UserInterface userInterface = new UserInterface();
         userInterface.menu();
     }
