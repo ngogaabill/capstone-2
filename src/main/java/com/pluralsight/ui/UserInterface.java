@@ -3,6 +3,7 @@ package com.pluralsight.ui;
 import com.pluralsight.models.*;
 import com.pluralsight.util.Receipt;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -417,18 +418,70 @@ public class UserInterface {
      * @param items
      */
     public static void displayOrderSummary(List<OrderedItem> items) {
-        System.out.println("\n-----------ORDER SUMMARY ---------");
-        System.out.printf("%-30s %5s%n", "Item", "Price");
-        System.out.println("-----------------------------------");
-
+//
+        System.out.println("---------------TACO GALAXY - ORDER SUMMARY---------------");
+        System.out.println();
         double total = 0.0;
+        int itemNumber = 1;
+
         for (OrderedItem item : items) {
-            System.out.printf("%-30s $%2.2f%n", item.description(), item.getPrice());
+            if (item instanceof Taco) {
+                Taco taco = (Taco) item;
+                System.out.println("─ Item #" + itemNumber + " ──────────────────────────────────");
+                System.out.println(" " + taco.getTacoSize() + " Taco");
+                System.out.println(" Tortilla: " + taco.getTortillaType());
+
+                if (taco.isDeepFried()) {
+                    System.out.println(" DEEP FRIED ");
+                }
+                // Display toppings
+                ArrayList<Toppings> toppings = taco.getToppings();
+                if (!toppings.isEmpty()) {
+                    System.out.println(" Toppings:");
+
+                    // Group toppings by type
+                    for (Toppings topping : toppings) {
+                        if (topping.getType().equals(Toppings.MEAT)) {
+                            String meatLabel = topping.getName();
+                            if (topping.isExtra()) {
+                                meatLabel += " (Extra)";
+                            }
+                            System.out.printf("   • %-30s $%.2f%n", meatLabel, topping.getPrice());
+                        }
+                    }
+                    for (Toppings topping : toppings) {
+                        if (topping.getType().equals(Toppings.CHEESE)) {
+                            String cheeseLabel = topping.getName();
+                            if (topping.isExtra()) {
+                                cheeseLabel += " (Extra)";
+                            }
+                            System.out.printf("   • %-30s $%.2f%n", cheeseLabel, topping.getPrice());
+                        }
+                    }
+                    for (Toppings topping : toppings) {
+                        if (topping.getType().equals(Toppings.REGULAR)) {
+                            System.out.println("   • " + topping.getName());
+                        }
+                    }
+                    for (Toppings topping : toppings) {
+                        if (topping.getType().equals(Toppings.SAUCE)) {
+                            System.out.println("   • " + topping.getName());
+                        }
+                    }
+                }
+                System.out.printf(" %-40s $%.2f%n", "Subtotal:", taco.getPrice());
+            } else {
+                // format for drinks and chips
+                System.out.println("─ Item #" + itemNumber + " ──────────────────────────────────");
+                System.out.printf(" %-40s $%.2f%n", item.description(), item.getPrice());
+            }
             total += item.getPrice();
+            itemNumber++;
+            System.out.println();
         }
-        System.out.println("-----------------------------------");
-        System.out.printf("%-30s $%2.2f%n", "TOTAL", total);
-        System.out.println("===================================");
+
+        System.out.println("──────────────────────────────────────────────");
+        System.out.printf("  %-38s $%.2f%n", "TOTAL:", total);
     }
 
     /**

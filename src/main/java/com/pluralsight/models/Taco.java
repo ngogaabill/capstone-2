@@ -13,7 +13,11 @@ public class Taco implements OrderedItem {
 
     public Taco() {
     }
-
+    public Taco(String tortillaType, String tacoSize, boolean deepFried) {
+        this.tortillaType = tortillaType;
+        this.tacoSize = tacoSize;
+        this.deepFried = deepFried;
+    }
     public void setTortillaType(String tortillaType) {
         this.tortillaType = tortillaType;
     }
@@ -21,17 +25,9 @@ public class Taco implements OrderedItem {
     public void setTacoSize(String tacoSize) {
         this.tacoSize = tacoSize;
     }
-
     public void setDeepFried(boolean deepFried) {
         this.deepFried = deepFried;
     }
-
-    public Taco(String tortillaType, String tacoSize, boolean deepFried) {
-        this.tortillaType = tortillaType;
-        this.tacoSize = tacoSize;
-        this.deepFried = deepFried;
-    }
-
     public String getTortillaType() {
         return tortillaType;
     }
@@ -40,14 +36,18 @@ public class Taco implements OrderedItem {
         return tacoSize;
     }
 
-    public boolean isDeepFried(boolean b) {
+    public void isDeepFried(boolean b) {
+         this.deepFried = b;
+    }
+
+    public boolean isDeepFried() {
         return deepFried;
     }
 
     @Override
     public String description() {
         if (deepFried) {
-            return "Size: " + getTacoSize() + " - Tortilla: " + getTortillaType() + "\nToppings:\n" + getToppings() + "Deep Fried";
+            return "Size: " + getTacoSize() + " - Tortilla: " + getTortillaType() + "\nToppings:\n" + getToppings() + "(Deep Fried)";
         }
         return "Size: " + getTacoSize() + " - Tortilla: " + getTortillaType() + "\nToppings:\n" + getToppings();
     }
@@ -71,7 +71,7 @@ public class Taco implements OrderedItem {
 
     @Override
     public String toString() {
-        return description() + "$" + getPrice() + "\n";
+        return description() + " $ " + getPrice() + "\n";
     }
 
     public void addToppingPrice(double total) {
