@@ -4,6 +4,7 @@ import com.pluralsight.models.Order;
 import com.pluralsight.models.OrderedItem;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -18,6 +19,11 @@ public class Receipt {
      */
     public void printReceipt(Order order) {
         String folderPath = "src/main/resources/receipts";
+        //Creat a directory if there's non
+        File directory = new File(folderPath);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
         String receiptFileName = folderPath + "/" + generateTimestamp() + ".txt";
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss");
         String date = String.valueOf(LocalDate.now());

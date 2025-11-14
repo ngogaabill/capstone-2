@@ -492,7 +492,7 @@ public class UserInterface {
                               (S)trawberry
                               (C)hocolate
                               (V)anilla
-                         Choice: """);
+                  Choice (S/C/V): """);
         String flavor = scanner.nextLine().trim().toUpperCase();
         if (drinkSize.matches("[SML]") && flavor.matches("[SCV]")) {
             Drink drink = new Drink(drinkSize, flavor);
