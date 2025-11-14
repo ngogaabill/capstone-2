@@ -80,7 +80,7 @@ public class UserInterface {
         }
     }
 
-    private void addStreetTaco(Order newOrder) {
+    private void addStreetTaco(Order order) {
         System.out.println("""
                 ──────────────| STREET TACO |──────────────
                 🌮 3-Taco Plate - $11.00
@@ -98,6 +98,47 @@ public class UserInterface {
 
         System.out.print("Would you like to Customize Your taco? (Y/N): ");
         String customize = scanner.nextLine().trim().toUpperCase();
+        if (customize.equals("Y")) {
+            customizeStreetTaco(streetTaco);
+        }
+
+        System.out.print("\uD83D\uDD25 Would you like your taco DEEP FRIED? (Y/N): ");
+        String deepFried = scanner.nextLine().trim().toUpperCase();
+        if (deepFried.equals("Y")) {
+            streetTaco.isDeepFried(true);
+        }
+
+        order.addItem(streetTaco);
+        System.out.println("\n✓ Street Taco added! Total: $" + String.format("%.2f", streetTaco.getPrice()));
+    }
+
+    private void customizeStreetTaco(Taco streetTaco) {
+        //replace meat
+        System.out.print("\nWould you like to Change Meat?(Y/N): ");
+        String changeMeat = scanner.nextLine().trim().toUpperCase();
+        if (changeMeat.equals("Y")) {
+            replaceMeat(streetTaco);
+        }
+
+        // add cheese
+        System.out.print("\nWould you like to Add Cheese? (Y/N): ");
+        String addCheeseOption = scanner.nextLine().trim().toUpperCase();
+        if (addCheeseOption.equals("Y")) {
+            addCheese(streetTaco);
+        }
+        // Add More Topps
+        System.out.print("\nWould you like to ADD MORE TOPPINGS? (Y/N): ");
+        String addMoreToppings = scanner.nextLine().trim().toUpperCase();
+        if (addMoreToppings.equals("Y")) {
+            regularToppings(streetTaco);
+        }
+    }
+
+    /**
+     * Removes the original Meat and Adds Another
+     * @param streetTaco
+     */
+    private void replaceMeat(Taco streetTaco) {
     }
 
     private void addChipSalsa(Order order) {
