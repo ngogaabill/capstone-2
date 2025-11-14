@@ -43,9 +43,10 @@ public class UserInterface {
             System.out.println("""
                     ──────────────|Order Menu| ────────
                     Option 1) Add Taco
-                    Option 2) Add Drink
-                    Option 3) Add Chip&Salsa
-                    Option 4) Checkout
+                    Option 2) Street Taco
+                    Option 3) Add Drink
+                    Option 4) Add Chip&Salsa
+                    Option 5) Checkout
                     Option 0) Cancel Order
                     ──────────────────────────────────
                     Choice: """);
@@ -56,12 +57,15 @@ public class UserInterface {
                     addTaco(newOrder);
                     break;
                 case 2:
-                    addDrink(newOrder);
+                    addStreetTaco(newOrder);
                     break;
                 case 3:
-                    addChipSalsa(newOrder);
+                    addDrink(newOrder);
                     break;
                 case 4:
+                    addChipSalsa(newOrder);
+                    break;
+                case 5:
                     checkOut(newOrder);
                     exit = true;
                     break;
@@ -74,6 +78,26 @@ public class UserInterface {
 
             }
         }
+    }
+
+    private void addStreetTaco(Order newOrder) {
+        System.out.println("""
+                ──────────────| STREET TACO |──────────────
+                🌮 3-Taco Plate - $11.00
+                   • Corn Tortilla
+                   • Carne Asada
+                   • Onions
+                   • Cilantro
+                   • Salsa Verde
+                   • Lime Wedges
+                ──────────────────────────────────────────
+                """);
+
+        // Create street taco
+        Taco streetTaco = new StreetTaco();
+
+        System.out.print("Would you like to Customize Your taco? (Y/N): ");
+        String customize = scanner.nextLine().trim().toUpperCase();
     }
 
     private void addChipSalsa(Order order) {
