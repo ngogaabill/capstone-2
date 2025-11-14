@@ -82,7 +82,7 @@ public class UserInterface {
 
     private void addStreetTaco(Order order) {
         System.out.println("""
-                ──────────────| STREET TACO |──────────────
+                ──────────────| STREET TACO|──────────────
                 🌮 3-Taco Plate - $11.00
                    • Corn Tortilla
                    • Carne Asada
@@ -136,11 +136,35 @@ public class UserInterface {
 
     /**
      * Removes the original Meat and Adds Another
+     *
      * @param streetTaco
      */
     private void replaceMeat(Taco streetTaco) {
+        // Remove carne asada
+        ArrayList<Toppings> toppings = streetTaco.getToppings();
+        Toppings meatToRemove = null;
+
+        for (Toppings topping : toppings) {
+            if (topping.getType().equals(Toppings.MEAT)) {
+                meatToRemove = topping;
+                break;
+            }
+        }
+
+        if (meatToRemove != null) {
+            toppings.remove(meatToRemove);
+            streetTaco.addToppingPrice(-meatToRemove.getPrice()); //Add neg amount of the meat to didact from order price
+            System.out.println("✓ Removed: " + meatToRemove.getName());
+        }
+        // Add new meat
+        addMeat(streetTaco);
     }
 
+    /**
+     * Add Chip&Salsa To Order
+     *
+     * @param order
+     */
     private void addChipSalsa(Order order) {
         System.out.println("""
                 ────────Chips & Salsa ($1.50)────────
@@ -507,7 +531,6 @@ public class UserInterface {
      * @param items
      */
     public static void displayOrderSummary(List<OrderedItem> items) {
-//
         System.out.println("──────────────|TACO GALAXY - ORDER SUMMARY|──────────────");
         System.out.println();
         double total = 0.0;
@@ -535,7 +558,7 @@ public class UserInterface {
                             if (topping.isExtra()) {
                                 meatLabel += " (Extra)";
                             }
-                            System.out.printf("   • %-30s $%.2f%n", meatLabel, topping.getPrice());
+                            System.out.printf("   •(Meat) %-30s $%.2f%n", meatLabel, topping.getPrice());
                         }
                     }
                     for (Toppings topping : toppings) {
@@ -544,7 +567,7 @@ public class UserInterface {
                             if (topping.isExtra()) {
                                 cheeseLabel += " (Extra)";
                             }
-                            System.out.printf("   • %-30s $%.2f%n", cheeseLabel, topping.getPrice());
+                            System.out.printf("   •(Cheese) %-30s $%.2f%n", cheeseLabel, topping.getPrice());
                         }
                     }
                     for (Toppings topping : toppings) {
@@ -554,7 +577,12 @@ public class UserInterface {
                     }
                     for (Toppings topping : toppings) {
                         if (topping.getType().equals(Toppings.SAUCE)) {
-                            System.out.println("   • " + topping.getName());
+                            System.out.println("   •(Sauce) " + topping.getName());
+                        }
+                    }
+                    for (Toppings topping : toppings) {
+                        if (topping.getType().equals(Toppings.SIDE)) {
+                            System.out.println("   •(Side) " + topping.getName());
                         }
                     }
                 }
