@@ -33,11 +33,14 @@ Users can:
 ---
 
 ## 🏗 Project Structure
-<img src="images/A UML class diagram .png" alt="Taco Galaxy UML Diagram" width="600"/>
+<img src="images/UML.png" alt="Taco Galaxy UML Diagram" width="600"/>
 
         if (meatToRemove != null) {
             toppings.remove(meatToRemove);
             streetTaco.addToppingPrice(-meatToRemove.getPrice()); //Add neg amount of the meat to didact from order price
             System.out.println("✓ Removed: " + meatToRemove.getName());
         }
+
 This was my favorite piece of code because I neutralized the total by adding the negative value.
+
+
